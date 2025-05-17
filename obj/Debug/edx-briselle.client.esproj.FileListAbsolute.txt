@@ -1,0 +1,1 @@
+C:\BriselleServer\edx-briselle\edx-briselle.client\obj\Debug\edx-briselle.client.esproj.CoreCompileInputs.cache
