@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/table";
-import { supabase } from "../../utils/supabase";
+import { supabase } from "../../../utils/supabase";
 
 interface Entity {
   [key: string]: any;
