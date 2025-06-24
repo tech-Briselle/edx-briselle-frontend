@@ -23,6 +23,7 @@ import DObjTable from "./components/tables/BasicTables/DObjTable";
 import TestNewTable from "./components/tables/BasicTables/newtable";
 import HoverTable from "./components/tables/BasicTables/HoverTestTable";
 //import SalesforceTable from "./components/tables/BasicTables/SalesforceTable";
+import SupabaseEntityTable from "./components/tables/BasicTables/SupabaseEntityTable";
 
 
 export default function App() {
@@ -50,6 +51,9 @@ export default function App() {
             <Route path="/dobj-tables" element={<DObjTable />} /> {/* ✅ No change here */}
             <Route path="/testpage" element={<HoverTable />} /> {/* ✅ No change here */}
             <Route path="/testnewtable" element={<TestNewTable />} /> {/* ✅ No change here */}
+             {/* Supabase project testing */}
+            <Route path="/supabase-entity" element={<SupabaseEntityTable />} />
+
 
                       {/*<Route path="/sf-tables" element={<SalesforceTable />} />*/}{/* ✅ No change here */}
 
