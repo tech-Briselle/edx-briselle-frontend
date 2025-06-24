@@ -29,18 +29,24 @@ export default function SupabaseEntityTable() {
 
   useEffect(() => {
     async function fetchData() {
-      const { data, error } = await supabase.from("entity").select("*");
-      if (error) {
-        setError(error.message);
-        return;
-      }
+      setLoading(true);
 
-      if (data && data.length > 0) {
-        const validColumns = Object.keys(fieldMappings).filter((key) => key in data[0]);
-        setColumns(validColumns);
-        setData(data);
+      const { data: result, error } = await supabase
+        .from("entity")
+        .select("*");
+
+      if (error) {
+        console.error("Supabase Error:", error.message);
+        setError(error.message);
+      } else if (!result || result.length === 0) {
+        console.warn("No data returned from Supabase.");
+        setError("No entity data found.");
       } else {
-        setError("No matching fields found.");
+        const validCols = Object.keys(fieldMappings).filter((key) =>
+          key in result[0]
+        );
+        setColumns(validCols);
+        setData(result);
       }
 
       setLoading(false);
@@ -49,8 +55,8 @@ export default function SupabaseEntityTable() {
     fetchData();
   }, []);
 
-  if (loading) return <p className="text-center p-4">Loading...</p>;
-  if (error) return <p className="text-center p-4 text-red-500">{error}</p>;
+  if (loading) return <p className="p-4 text-center">Loading entity data...</p>;
+  if (error) return <p className="p-4 text-red-500 text-center">{error}</p>;
 
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -73,8 +79,11 @@ export default function SupabaseEntityTable() {
             {data.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
                 {columns.map((col, colIndex) => (
-                  <TableCell key={colIndex} className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                    {row[col] ?? "-"}
+                  <TableCell
+                    key={colIndex}
+                    className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400"
+                  >
+                    {row[col]?.toString() || "-"}
                   </TableCell>
                 ))}
               </TableRow>
